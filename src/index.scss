@@ -6,6 +6,7 @@
   --text-primary: #ffffff;
   --text-secondary: #e0e0e0;
   --accent-color: #fff829;
+  --background-btn: #2a2a28;
 }
 
 * {
@@ -20,4 +21,16 @@ body {
   font-weight: 300;
   background-color: var(--background-color);
   color: var(--text-primary);
+}
+
+// styles for active link in the navigation
+a.active {
+  color: var(--accent-color);
+  background-color: #323232;
+  border-radius: 8px;
+  transition: all 0.4s;
+
+  svg path {
+    fill: var(--accent-color);
+  }
 }

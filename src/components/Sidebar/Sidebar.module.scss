@@ -1,0 +1,55 @@
+.sidebar {
+  max-width: 330px;
+  min-height: 100vh;
+  padding: 50px;
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+
+  &_title {
+    font-weight: 500;
+    font-size: 32px;
+    margin-bottom: 75px;
+  }
+
+  &_nav {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 125px;
+  }
+
+  &_navlink {
+    display: flex;
+    max-width: 230px;
+    padding: 5px 0 5px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 20px;
+    margin-bottom: 30px;
+    transition: all 0.4s;
+
+    &:hover {
+      color: var(--accent-color);
+      svg path {
+        fill: var(--accent-color);
+        transition: all 0.4s;
+      }
+    }
+  }
+
+  &_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin: 0 10px 0 6px;
+    width: 33px;
+    height: 33px;
+    background-color: var(--background-btn);
+  }
+
+  &_text {
+    color: var(--text-secondary);
+    font-size: 16px;
+  }
+}
