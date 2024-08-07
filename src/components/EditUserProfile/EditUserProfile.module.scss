@@ -1,0 +1,53 @@
+.user {
+  padding: 50px 50px 100px;
+
+  &_title {
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  &_text {
+    margin-bottom: 60px;
+  }
+
+  &_form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+
+    & div:nth-child(3),
+    & div:nth-child(4) {
+      width: 910px;
+    }
+  }
+
+  &_form_group {
+    display: flex;
+    flex-direction: column;
+    width: 435px;
+
+    & label {
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    & input {
+      width: 100%;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: var(--background-color);
+      color: var(--text-primary);
+      border: 1px solid #323232;
+    }
+  }
+
+  & button {
+    width: 162px;
+    height: 53px;
+    color: var(--accent-color);
+    background-color: var(--background-btn);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+}
