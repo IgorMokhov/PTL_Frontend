@@ -1,0 +1,21 @@
+.layout {
+  display: grid;
+  grid-template-areas:
+    'layout_sidebar layout_header'
+    'layout_sidebar layout_main';
+  grid-template-rows: 115px 1fr;
+  grid-template-columns: 330px 1fr; 
+  height: 100vh;
+
+  &_sidebar {
+    grid-area: layout_sidebar;
+  }
+
+  &_header {
+    grid-area: layout_header;
+  }
+
+  &_main {
+    grid-area: layout_main;
+  }
+}
