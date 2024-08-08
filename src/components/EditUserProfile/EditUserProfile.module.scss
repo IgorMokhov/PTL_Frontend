@@ -1,5 +1,6 @@
 .user {
   padding: 50px 50px 100px;
+  max-width: 1010px;
 
   &_title {
     font-weight: 500;
@@ -39,6 +40,7 @@
       background-color: var(--background-color);
       color: var(--text-primary);
       border: 1px solid #323232;
+      outline: none;
     }
   }
 
