@@ -1,0 +1,111 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login {
+  width: 720px;
+  padding: 0 10px;
+  text-align: center;
+
+  &_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  &_logo_title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-left: 15px;
+  }
+
+  &_title {
+    font-size: 48px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 62px;
+  }
+
+  &_text {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  &_form {
+    & label {
+      display: block;
+      font-weight: 400;
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    & input {
+      width: 100%;
+      padding: 10px 20px;
+      background-color: var(--background-color);
+      border: 1px solid var(--input-border);
+      border-radius: 5px;
+      outline: none;
+      color: white;
+      font-size: 16px;
+
+      &::placeholder {
+        color: var(--input-placeholder);
+      }
+
+      &[type='email'] {
+        margin-bottom: 40px;
+      }
+
+      &[type='password'] {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &_forgot_link {
+    display: block;
+    color: var(--input-placeholder);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 60px;
+    text-align: left;
+  }
+
+  &_submit {
+    width: 140px;
+    height: 53px;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--background-color);
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 60px;
+    cursor: pointer;
+  }
+
+  &_footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &_footer_text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #828282;
+  }
+
+  &_footer_link {
+    color: white;
+    margin-left: 5px;
+  }
+}
