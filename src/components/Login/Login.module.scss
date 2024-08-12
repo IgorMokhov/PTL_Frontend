@@ -10,32 +10,6 @@
   padding: 0 10px;
   text-align: center;
 
-  &_logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-
-  &_logo_title {
-    font-size: 32px;
-    font-weight: 500;
-    margin-left: 15px;
-  }
-
-  &_title {
-    font-size: 48px;
-    font-weight: 400;
-    text-align: center;
-    line-height: 62px;
-  }
-
-  &_text {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
   &_form {
     & label {
       display: block;
