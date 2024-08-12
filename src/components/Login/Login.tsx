@@ -1,9 +1,9 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import loginIcon from '../../assets/icons/iconLogin.svg';
 import { Link } from 'react-router-dom';
+import { LoginHeader } from '../LoginHeader/LoginHeader';
 import styles from './Login.module.scss';
 
-interface IFormInput {
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -19,12 +19,7 @@ export const Login = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.login}>
-        <div className={styles.login_logo}>
-          <img src={loginIcon} alt="login icon" />
-          <h4 className={styles.login_logo_title}>PrimeTokenList</h4>
-        </div>
-        <h2 className={styles.login_title}>Login to your account</h2>
-        <p className={styles.login_text}>to participate in the best projects</p>
+        <LoginHeader />
 
         <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="email">Email:</label>
