@@ -6,12 +6,19 @@ import { TokenLaunchesPage } from './pages/TokenLaunchesPage/TokenLaunchesPage';
 import { TransactionsPage } from './pages/TransactionsPage/TransactionsPage';
 import { WalletPage } from './pages/WalletPage/WalletPage';
 import { VerificationPage } from './pages/VerificationPage/VerificationPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { SignUpPage } from './pages/SignUpPage/SignupPage';
+import { ForgotPassPage } from './pages/ForgotPassPage/ForgotPassPage';
 import './App.scss';
 
 function App() {
   return (
     <div className="app">
       <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignUpPage />} />
+        <Route path="forgot-password" element={<ForgotPassPage />} />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="account" element={<AccountPage />} />
