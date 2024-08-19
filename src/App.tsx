@@ -9,6 +9,7 @@ import { VerificationPage } from './pages/VerificationPage/VerificationPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { SignUpPage } from './pages/SignUpPage/SignupPage';
 import { ForgotPassPage } from './pages/ForgotPassPage/ForgotPassPage';
+import { PrivateRoute } from './routes/PrivateRoute';
 import './App.scss';
 
 function App() {
@@ -19,13 +20,15 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
         <Route path="forgot-password" element={<ForgotPassPage />} />
 
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="account" element={<AccountPage />} />
-          <Route path="token-launches" element={<TokenLaunchesPage />} />
-          <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="wallet" element={<WalletPage />} />
-          <Route path="verification" element={<VerificationPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="account" element={<AccountPage />} />
+            <Route path="token-launches" element={<TokenLaunchesPage />} />
+            <Route path="transactions" element={<TransactionsPage />} />
+            <Route path="wallet" element={<WalletPage />} />
+            <Route path="verification" element={<VerificationPage />} />
+          </Route>
         </Route>
       </Routes>
     </div>
