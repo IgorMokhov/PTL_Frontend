@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
 import styles from './SignUp.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
 
 interface IFormInputStepOne {
   firstName: string;
@@ -17,9 +19,8 @@ interface IFormInputStepTwo {
 }
 
 export const SignUp = () => {
-  const { register, handleSubmit } = useForm<IFormInputStepOne>({
-    defaultValues: { citizenUS: true },
-  }); // for form in the step one
+  const { register, handleSubmit, getValues, control, formState } =
+    useForm<IFormInputStepOne>(); // for form in the step one
   const { register: registerStepTwo, handleSubmit: handleSubmitStepTwo } =
     useForm<IFormInputStepTwo>(); // for form in the step two
   const navigate = useNavigate();
@@ -89,13 +90,24 @@ export const SignUp = () => {
                   placeholder="Your country"
                 />
               </div>
-
-              <input {...register('citizenUS')} type="checkbox" />
-              <label htmlFor="citizenUS">I am not a US citizen</label>
-
+              <Controller
+                name="citizenUS"
+                control={control}
+                defaultValue={true}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomCheckbox
+                    value={field.value}
+                    onChange={field.onChange}
+                    label={'I am not a US citizen'}
+                  />
+                )}
+              />
               <div className={styles.signup_form_btns}>
                 <button onClick={() => navigate('/login')}>Sign In</button>
-                <button type="submit">Next</button>
+                <button disabled={!formState.isValid} type="submit">
+                  Next
+                </button>
               </div>
             </form>
           </>
