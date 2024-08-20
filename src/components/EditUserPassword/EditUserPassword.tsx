@@ -26,7 +26,7 @@ export const EditUserPassword = () => {
           <input {...register('newPass')} type="password" />
         </div>
         <div className={styles.password_form_group}>
-          <label htmlFor="newPassConfirm">New password confirmation::</label>
+          <label htmlFor="newPassConfirm">New password confirmation:</label>
           <input {...register('newPassConfirm')} type="password" />
         </div>
         <div className={styles.password_form_group}>
