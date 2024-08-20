@@ -1,0 +1,35 @@
+.checkbox {
+  position: relative;
+
+  &_input {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+
+    &:checked {
+      & + label::before {
+        background-image: url('../../assets//icons/iconChecked.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+
+  &_label {
+    display: flex;
+    color: var(--accent-color);
+    text-decoration: underline;
+    user-select: none;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      width: 28px;
+      height: 28px;
+      border-radius: 5px;
+      border: 1px solid var(--input-border);
+      background-color: #1b1b1a;
+      margin-right: 20px;
+    }
+  }
+}
