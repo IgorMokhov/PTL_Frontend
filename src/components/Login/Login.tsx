@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
 import styles from './Login.module.scss';
+import { CustomButton } from '../CustomButton/CustomButton';
 
 export interface IFormInput {
   email: string;
@@ -38,9 +39,14 @@ export const Login = () => {
           <Link className={styles.login_forgot_link} to="/forgot-password">
             Forgot your password?
           </Link>
-          <button className={styles.login_submit} type="submit">
+          <CustomButton
+            width={140}
+            height={53}
+            variant={'inverted'}
+            type={'submit'}
+          >
             Sign In
-          </button>
+          </CustomButton>
         </form>
 
         <div className={styles.login_footer}>
