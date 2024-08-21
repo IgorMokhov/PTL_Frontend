@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../Sidebar/Sidebar';
 import styles from './Layout.module.scss';
 import { Header } from '../Header/Header';
+import { Container } from '../Container/Container';
 
 export const Layout = () => {
   return (
@@ -13,7 +14,9 @@ export const Layout = () => {
         <Header />
       </div>
       <main className={styles.layout_main}>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </main>
     </div>
   );
