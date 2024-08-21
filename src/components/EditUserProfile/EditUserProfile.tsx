@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { CustomButton } from '../CustomButton/CustomButton';
 import styles from './EditUserProfile.module.scss';
 
 interface IFormInput {
@@ -38,7 +39,9 @@ export const EditUserProfile = () => {
           <label htmlFor="country">Your country:</label>
           <input {...register('country')} type="text" />
         </div>
-        <button type="submit">Update</button>
+        <CustomButton type={'submit'} width={162} height={53}>
+          Update
+        </CustomButton>
       </form>
     </div>
   );
