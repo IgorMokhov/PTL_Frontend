@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
 import { useNavigate } from 'react-router-dom';
+import { CustomButton } from '../CustomButton/CustomButton';
 import styles from './ForgotPassword.module.scss';
 
 interface IFormInput {
@@ -41,15 +42,22 @@ export const ForgotPassword = () => {
             placeholder="Password from the letter"
           />
           <div className={styles.forgot_pass_btns}>
-            <button
-              className={styles.forgot_pass_back}
+            <CustomButton
+              width={140}
+              height={53}
               onClick={() => navigate('/login')}
             >
               Back
-            </button>
-            <button className={styles.forgot_pass_submit}>
+            </CustomButton>
+            <CustomButton
+              width={247}
+              height={53}
+              variant={'inverted'}
+              type={'submit'}
+              onClick={() => navigate('/login')}
+            >
               Change password
-            </button>
+            </CustomButton>
           </div>
         </form>
       </div>
