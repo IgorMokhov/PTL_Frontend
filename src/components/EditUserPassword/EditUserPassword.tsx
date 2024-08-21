@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { CustomButton } from '../CustomButton/CustomButton';
 import styles from './EditUserPassword.module.scss';
 
 interface IFormInput {
@@ -33,7 +34,9 @@ export const EditUserPassword = () => {
           <label htmlFor="currentPass">Current password:</label>
           <input {...register('currentPass')} type="password" />
         </div>
-        <button type="submit">Update</button>
+        <CustomButton type={'submit'} width={162} height={53}>
+          Update
+        </CustomButton>
       </form>
       <p className={styles.password_descr}>
         For your safety, any password or email changes will disable withdrawals
