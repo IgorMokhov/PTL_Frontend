@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
+import { CustomButton } from '../CustomButton/CustomButton';
 
 interface IFormInputStepOne {
   firstName: string;
@@ -104,10 +105,22 @@ export const SignUp = () => {
                 )}
               />
               <div className={styles.signup_form_btns}>
-                <button onClick={() => navigate('/login')}>Sign In</button>
-                <button disabled={!formState.isValid} type="submit">
+                <CustomButton
+                  width={201}
+                  height={53}
+                  onClick={() => navigate('/login')}
+                >
+                  Sign In
+                </CustomButton>
+                <CustomButton
+                  width={140}
+                  height={53}
+                  type={'submit'}
+                  disabled={!formState.isValid}
+                  variant={'inverted'}
+                >
                   Next
-                </button>
+                </CustomButton>
               </div>
             </form>
           </>
@@ -131,8 +144,21 @@ export const SignUp = () => {
                 placeholder="Password from the letter"
               />
               <div className={styles.signup_form_btns}>
-                <button onClick={() => setStep(1)}>Back</button>
-                <button type="submit">Sign Up</button>
+                <CustomButton
+                  width={140}
+                  height={53}
+                  onClick={() => setStep(1)}
+                >
+                  Sign In
+                </CustomButton>
+                <CustomButton
+                  width={140}
+                  height={53}
+                  type={'submit'}
+                  variant={'inverted'}
+                >
+                  Sign Up
+                </CustomButton>
               </div>
             </form>
           </>
