@@ -1,0 +1,22 @@
+.customButton {
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 20px;
+  font-family: 'Mukta', sans-serif;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.default {
+  color: var(--accent-color);
+  background-color: var(--background-btn);
+}
+
+.inverted {
+  color: var(--background-btn);
+  background-color: var(--accent-color);
+}
