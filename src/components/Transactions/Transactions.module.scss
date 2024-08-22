@@ -1,0 +1,39 @@
+.transactions {
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+
+    &_wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &_title {
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  &_subtitle {
+    color: var(--text-secondary);
+  }
+
+  &_text {
+    max-width: 450px;
+    font-size: 16px;
+    margin-bottom: 60px;
+  }
+
+  &_history_header {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(6, 1fr);
+    margin-bottom: 20px;
+
+    & span {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+  }
+}
