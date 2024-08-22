@@ -1,0 +1,25 @@
+.token {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 20px;
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: auto;
+  }
+
+  &_title {
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  &_descr {
+    font-weight: 400;
+  }
+
+}
