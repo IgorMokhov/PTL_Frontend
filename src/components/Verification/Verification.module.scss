@@ -1,0 +1,46 @@
+.verification {
+  &_title {
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  &_text {
+    color: var(--text-secondary);
+    margin-bottom: 60px;
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+
+    & label:nth-child(1) {
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    & input[type='email'] {
+      padding: 10px 20px;
+      background-color: var(--secondary-color);
+      border: 1px solid var(--input-border);
+      border-radius: 5px;
+      outline: none;
+      color: white;
+      margin-bottom: 40px;
+      max-width: 910px;
+
+      &::placeholder {
+        color: var(--text-primary);
+        font-size: 16px;
+      }
+    }
+
+    & button {
+      margin-top: 60px;
+    }
+  }
+
+  &_descr {
+    max-width: 475px;
+  }
+}
