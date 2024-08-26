@@ -1,4 +1,5 @@
 import { CustomButton } from '../CustomButton/CustomButton';
+import { TokenListHeader } from '../TokenListHeader/TokenListHeader';
 import { TransactionList } from '../TransactionList/TransactionList';
 import styles from './Transactions.module.scss';
 
@@ -21,16 +22,16 @@ export const Transactions = () => {
 
       {isTransactions ? (
         <>
-          <div className={styles.transactions_history}>
-            <div className={styles.transactions_history_header}>
-              <span>Token</span>
-              <span>Project</span>
-              <span>Cost per 1 token (USD)</span>
-              <span>Tokens purchased (USD)</span>
-              <span>Quantity</span>
-              <span>Total amount (USD)</span>
-            </div>
-          </div>
+          <TokenListHeader
+            titles={[
+              'Token',
+              'Project',
+              'Cost per 1 token (USD)',
+              'Tokens purchased (USD)',
+              'Quantity',
+              'Total amount (USD)',
+            ]}
+          />
           <TransactionList />
         </>
       ) : (
