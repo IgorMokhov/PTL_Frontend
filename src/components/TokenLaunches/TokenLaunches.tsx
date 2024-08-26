@@ -1,7 +1,5 @@
-import { TokenList } from '../TokenList/TokenList';
+import { AvailableTokenList } from '../AvailableTokenList/AvailableTokenList';
 import styles from './TokenLaunches.module.scss';
-
-
 
 export const TokenLaunches = () => {
   return (
@@ -10,7 +8,7 @@ export const TokenLaunches = () => {
       <p className={styles.tokenLaunches_descr}>
         Take part in the token launch
       </p>
-      <TokenList />
+      <AvailableTokenList />
     </div>
   );
 };

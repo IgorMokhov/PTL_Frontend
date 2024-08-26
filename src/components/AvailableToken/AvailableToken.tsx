@@ -1,10 +1,10 @@
 import { CustomButton } from '../CustomButton/CustomButton';
 import testIson from '../../assets/icons/testIcon.svg';
-import styles from './Token.module.scss';
+import styles from './AvailableToken.module.scss';
 
-interface TokenProps {}
+interface AvailableTokenProps {}
 
-export const Token = ({}: TokenProps) => {
+export const AvailableToken = ({}: AvailableTokenProps) => {
   return (
     <div className={styles.token}>
       <img src={testIson} alt="testIson" />
