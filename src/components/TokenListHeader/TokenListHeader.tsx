@@ -7,8 +7,10 @@ interface TokenListHeaderProps {
 export const TokenListHeader = ({ titles }: TokenListHeaderProps) => {
   return (
     <div className={styles.titles}>
-      {titles.map((title) => (
-        <span className={styles.title}>{title}</span>
+      {titles.map((title, index) => (
+        <span className={styles.title} key={index}>
+          {title}
+        </span>
       ))}
     </div>
   );
