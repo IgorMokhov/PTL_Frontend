@@ -1,0 +1,33 @@
+.wallet {
+  &_title {
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  &_balans {
+    font-weight: 500;
+    font-size: 128px;
+    color: var(--accent-color);
+    line-height: 1;
+    margin-bottom: 100px;
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+
+  &_header_wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_subtitle {
+    color: var(--text-secondary);
+  }
+
+  &_list {
+    margin-bottom: 100px;
+  }
+}
