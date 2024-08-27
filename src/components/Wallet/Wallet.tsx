@@ -1,4 +1,5 @@
 import { CustomButton } from '../CustomButton/CustomButton';
+import { InfoTokenList } from '../InfoTokenList/InfoTokenList';
 import { PurchasedTokenList } from '../PurchasedTokenList/PurchasedTokenList';
 import { TokenListHeader } from '../TokenListHeader/TokenListHeader';
 import styles from './Wallet.module.scss';
@@ -53,6 +54,7 @@ export const Wallet = () => {
             'Algorithm',
           ]}
         />
+        <InfoTokenList />
       </div>
     </div>
   );
