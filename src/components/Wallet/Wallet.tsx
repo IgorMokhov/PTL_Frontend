@@ -1,5 +1,5 @@
 import { CustomButton } from '../CustomButton/CustomButton';
-import { TokenList } from '../TokenList/TokenList';
+import { PurchasedTokenList } from '../PurchasedTokenList/PurchasedTokenList';
 import { TokenListHeader } from '../TokenListHeader/TokenListHeader';
 import styles from './Wallet.module.scss';
 
@@ -30,7 +30,7 @@ export const Wallet = () => {
             'Action',
           ]}
         />
-        <TokenList />
+        <PurchasedTokenList />
       </div>
 
       <div className={styles.wallet_header}>
@@ -53,7 +53,6 @@ export const Wallet = () => {
             'Algorithm',
           ]}
         />
-        <TokenList />
       </div>
     </div>
   );
