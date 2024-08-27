@@ -14,7 +14,7 @@ export const Wallet = () => {
           <h5 className={styles.wallet_title}>Tokens</h5>
           <p className={styles.wallet_subtitle}>Your purchased tokens</p>
         </div>
-        <CustomButton width={247} height={53}>
+        <CustomButton width={247} height={53} iconVariant={'buy'}>
           Buy more tokens
         </CustomButton>
       </div>
