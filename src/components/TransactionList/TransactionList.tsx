@@ -27,8 +27,8 @@ export const TransactionList = () => {
 
   return (
     <div className={styles.transaction_list}>
-      {transactions.map((transaction) => (
-        <TransactionItem {...transaction} />
+      {transactions.map((transaction, index) => (
+        <TransactionItem key={index} {...transaction} />
       ))}
     </div>
   );
