@@ -1,6 +1,6 @@
 import { CustomButton } from '../CustomButton/CustomButton';
 import { TokenListHeader } from '../TokenListHeader/TokenListHeader';
-import { TokenList } from '../TokenList/TokenList';
+import { TransactionList } from '../TransactionList/TransactionList';
 import styles from './Transactions.module.scss';
 
 export const Transactions = () => {
@@ -32,7 +32,7 @@ export const Transactions = () => {
               'Total amount (USD)',
             ]}
           />
-          <TokenList />
+          <TransactionList />
         </>
       ) : (
         <>

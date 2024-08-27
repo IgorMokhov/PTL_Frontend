@@ -1,8 +1,8 @@
 import iconTest from '../../assets/icons/testIcon.svg';
-import { Token } from '../Token/Token';
-import styles from './TokenList.module.scss';
+import { TransactionItem } from '../TransactionItem/TransactionItem';
+import styles from './TransactionList.module.scss';
 
-export const TokenList = () => {
+export const TransactionList = () => {
   // test data
   const transactions = [
     {
@@ -26,9 +26,9 @@ export const TokenList = () => {
   ];
 
   return (
-    <div className={styles.token_list}>
+    <div className={styles.transaction_list}>
       {transactions.map((transaction) => (
-        <Token {...transaction} />
+        <TransactionItem {...transaction} />
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
-import styles from './Token.module.scss';
+import styles from './TransactionItem.module.scss';
 
-interface TokenProps {
+interface TransactionItemProps {
   tokenIcon: string;
   token: string;
   project: string;
@@ -10,7 +10,7 @@ interface TokenProps {
   total: string;
 }
 
-export const Token = ({
+export const TransactionItem = ({
   tokenIcon,
   token,
   project,
@@ -18,9 +18,9 @@ export const Token = ({
   purchased,
   quantity,
   total,
-}: TokenProps) => {
+}: TransactionItemProps) => {
   return (
-    <div className={styles.token}>
+    <div className={styles.transaction}>
       <span>
         <img src={tokenIcon} alt="tokenIcon" />
         {token}
