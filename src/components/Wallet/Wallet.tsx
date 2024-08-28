@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { InfoTokenList } from '../InfoTokenList/InfoTokenList';
 import { PurchasedTokenList } from '../PurchasedTokenList/PurchasedTokenList';
 import { TokenListHeader } from '../TokenListHeader/TokenListHeader';
 import styles from './Wallet.module.scss';
+import { WithdrawModal } from '../WithdrawModal/WithdrawModal';
 
 export const Wallet = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={styles.wallet}>
       <h6 className={styles.wallet_title}>Your balance</h6>
@@ -31,7 +35,7 @@ export const Wallet = () => {
             'Action',
           ]}
         />
-        <PurchasedTokenList />
+        <PurchasedTokenList openModal={() => setIsModalOpen(true)} />
       </div>
 
       <div className={styles.wallet_header}>
@@ -56,6 +60,7 @@ export const Wallet = () => {
         />
         <InfoTokenList />
       </div>
+      {isModalOpen && <WithdrawModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };

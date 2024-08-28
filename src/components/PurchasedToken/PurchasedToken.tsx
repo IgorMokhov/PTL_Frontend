@@ -9,6 +9,7 @@ interface PurchasedTokenProps {
   date: string;
   status: string;
   action: string;
+  openModal: () => void;
 }
 
 export const PurchasedToken = ({
@@ -19,6 +20,7 @@ export const PurchasedToken = ({
   date,
   status,
   action,
+  openModal,
 }: PurchasedTokenProps) => {
   return (
     <div className={styles.purchased_token}>
@@ -30,7 +32,7 @@ export const PurchasedToken = ({
       <span>{balance}</span>
       <span>{date}</span>
       <span>{status}</span>
-      <CustomButton width={138} height={40}>
+      <CustomButton width={138} height={40} onClick={openModal}>
         {action}
       </CustomButton>
     </div>

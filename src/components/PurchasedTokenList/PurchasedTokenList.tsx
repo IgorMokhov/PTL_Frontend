@@ -2,7 +2,11 @@ import iconTest from '../../assets/icons/testIcon.svg';
 import { PurchasedToken } from '../PurchasedToken/PurchasedToken';
 import styles from './PurchasedTokenList.module.scss';
 
-export const PurchasedTokenList = () => {
+interface PurchasedTokenListProps {
+  openModal: () => void;
+}
+
+export const PurchasedTokenList = ({ openModal }: PurchasedTokenListProps) => {
   // test data
   const purchasedTokens = [
     {
@@ -28,7 +32,7 @@ export const PurchasedTokenList = () => {
   return (
     <div className={styles.purchased_list}>
       {purchasedTokens.map((token, index) => (
-        <PurchasedToken key={index} {...token} />
+        <PurchasedToken key={index} {...token} openModal={openModal} />
       ))}
     </div>
   );
