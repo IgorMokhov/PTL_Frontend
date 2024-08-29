@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import iconClose from '../../assets/icons/iconClose.svg';
@@ -25,6 +26,14 @@ export const WithdrawModal = ({ onClose }: WithdrawModalProps) => {
   const handleBackDropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) onClose();
   };
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   return (
     <div className={styles.backdrop} onClick={handleBackDropClick}>
