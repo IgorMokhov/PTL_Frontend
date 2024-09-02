@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useAppDispatch } from './redux/hooks';
+import { setToken } from './redux/slices/auth/authSlice';
 import { Layout } from './components/Layout/Layout';
 import { HomePage } from './pages/HomePage/HomePage';
 import { AccountPage } from './pages/AccountPage/AccountPage';
@@ -13,6 +16,15 @@ import { PrivateRoute } from './routes/PrivateRoute';
 import './App.scss';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(setToken(token));
+    }
+  }, []);
+
   return (
     <div className="app">
       <Routes>
