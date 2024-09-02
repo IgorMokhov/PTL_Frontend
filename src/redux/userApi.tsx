@@ -20,7 +20,16 @@ export const userApi = createApi({
         body: loginData,
       }),
     }),
+
+    resetPassword: builder.mutation({
+      query: (email) => ({
+        url: '/password/reset',
+        method: 'POST',
+        body: email,
+      }),
+    }),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation } = userApi;
+export const { useSignupMutation, useLoginMutation, useResetPasswordMutation } =
+  userApi;
