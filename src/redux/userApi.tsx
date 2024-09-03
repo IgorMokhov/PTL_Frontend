@@ -28,8 +28,20 @@ export const userApi = createApi({
         body: email,
       }),
     }),
+
+    updateUser: builder.mutation({
+      query: (newData) => ({
+        url: '/user',
+        method: 'PUT',
+        body: newData,
+      }),
+    }),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation, useResetPasswordMutation } =
-  userApi;
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useResetPasswordMutation,
+  useUpdateUserMutation,
+} = userApi;
