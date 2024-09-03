@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
 import { useNavigate } from 'react-router-dom';
 import { CustomButton } from '../CustomButton/CustomButton';
+import {
+  useLoginMutation,
+  useResetPasswordMutation,
+} from '../../redux/userApi';
 import styles from './ForgotPassword.module.scss';
 
 interface IFormInput {
@@ -13,6 +17,14 @@ interface IFormInput {
 export const ForgotPassword = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+  const [
+    resetPassword,
+    { isSuccess: isSuccessReset, isError: isErrorReset, error: errorReset },
+  ] = useResetPasswordMutation();
+  const [
+    login,
+    { isSuccess: isSuccessLogin, isError: isErrorLogin, error: errorLogin },
+  ] = useLoginMutation();
 
   const {
     register,
@@ -20,15 +32,29 @@ export const ForgotPassword = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  console.log(errors);
-
   const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
     if (step === 1) {
-      console.log(email);
+      resetPassword({ email });
     } else if (step === 2) {
-      console.log(password);
+      login({ email, password });
     }
   };
+
+  useEffect(() => {
+    if (isSuccessReset) {
+      setStep(2);
+    } else if (isErrorReset) {
+      console.log(errorReset);
+    }
+  }, [isSuccessReset, isErrorReset, errorReset]);
+
+  useEffect(() => {
+    if (isSuccessLogin) {
+      navigate('/');
+    } else if (isErrorLogin) {
+      console.log(errorLogin);
+    }
+  }, [isSuccessLogin, isErrorLogin, errorLogin]);
 
   return (
     <div className={styles.wrapper}>
