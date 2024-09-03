@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import styles from './EditUserProfile.module.scss';
+import { useUpdateUserMutation } from '../../redux/userApi';
 
 interface IFormInput {
   firstName: string;
@@ -10,10 +11,28 @@ interface IFormInput {
 }
 
 export const EditUserProfile = () => {
-  const { register, handleSubmit, reset } = useForm<IFormInput>();
+  const { register, handleSubmit, reset } = useForm<IFormInput>({
+    defaultValues: {
+      firstName: 'Nick',
+      lastName: 'Stone',
+      email: 'nickolas.stone@gmail.com',
+      country: 'Russian Federation',
+    },
+  });
+  const [updateUser] = useUpdateUserMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = ({
+    firstName,
+    lastName,
+    email,
+    country,
+  }) => {
+    updateUser({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      country,
+    });
     reset();
   };
 
