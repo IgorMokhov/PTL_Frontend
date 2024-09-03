@@ -14,7 +14,13 @@ export const ForgotPassword = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
+  console.log(errors);
 
   const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
     if (step === 1) {
@@ -41,9 +47,16 @@ export const ForgotPassword = () => {
               className={styles.forgot_pass_form}
               onSubmit={handleSubmit(onSubmit)}
             >
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">
+                Email:
+                <p className={styles.forgot_pass_error}>
+                  {errors?.email?.message}
+                </p>
+              </label>
               <input
-                {...register('email')}
+                {...register('email', {
+                  required: '* fill the field',
+                })}
                 type="email"
                 placeholder="Your email address"
               />
@@ -81,9 +94,16 @@ export const ForgotPassword = () => {
               className={styles.forgot_pass_form}
               onSubmit={handleSubmit(onSubmit)}
             >
-              <label htmlFor="password">Enter password:</label>
+              <label htmlFor="password">
+                Enter password:
+                <p className={styles.forgot_pass_error}>
+                  {errors?.password?.message}
+                </p>
+              </label>
               <input
-                {...register('password')}
+                {...register('password', {
+                  required: '* fill the field',
+                })}
                 type="password"
                 placeholder="Password from the letter"
               />
