@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
+import { useUpdatePasswordMutation } from '../../redux/userApi';
 import styles from './EditUserPassword.module.scss';
 
 interface IFormInput {
@@ -10,9 +11,18 @@ interface IFormInput {
 
 export const EditUserPassword = () => {
   const { register, handleSubmit, reset } = useForm<IFormInput>();
+  const [updatePassword] = useUpdatePasswordMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = ({
+    newPass,
+    newPassConfirm,
+    currentPass,
+  }) => {
+    updatePassword({
+      new_password: newPass,
+      confirm_password: newPassConfirm,
+      old_password: currentPass,
+    });
     reset();
   };
 
