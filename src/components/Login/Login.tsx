@@ -1,8 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
-import styles from './Login.module.scss';
 import { CustomButton } from '../CustomButton/CustomButton';
+import { useLoginMutation } from '../../redux/userApi';
+import { useAppDispatch } from '../../redux/hooks';
+import { setToken } from '../../redux/slices/auth/authSlice';
+import styles from './Login.module.scss';
 
 export interface IFormInput {
   email: string;
@@ -10,12 +13,20 @@ export interface IFormInput {
 }
 
 export const Login = () => {
-  const { register, handleSubmit, reset } = useForm<IFormInput>();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const [login, { isSuccess, data }] = useLoginMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
+    login({ email, password });
   };
+
+  if (isSuccess && data) {
+    const token = data.access_token;
+    dispatch(setToken(token));
+    navigate('/');
+  }
 
   return (
     <div className={styles.wrapper}>
