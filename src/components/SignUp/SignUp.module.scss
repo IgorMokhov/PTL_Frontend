@@ -49,6 +49,7 @@
   }
 
   &_form_group {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -121,5 +122,13 @@
     & span {
       color: white;
     }
+  }
+
+  &_error {
+    position: absolute;
+    top: 46px;
+    right: 13px;
+    color: var(--error-color);
+    font-size: 16px;
   }
 }
