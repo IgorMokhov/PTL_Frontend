@@ -24,7 +24,7 @@ export const SignUp = () => {
     register,
     handleSubmit,
     control,
-    formState: { isValid },
+    formState: { errors },
   } = useForm<FormData>();
 
   const [
@@ -99,34 +99,44 @@ export const SignUp = () => {
               <div className={styles.signup_form_group}>
                 <label htmlFor="firstName">First Name:</label>
                 <input
-                  {...register('firstName')}
+                  {...register('firstName', { required: '* fill the field' })}
                   type="text"
                   placeholder="Your First Name"
                 />
+                <p className={styles.signup_error}>
+                  {errors?.firstName?.message}
+                </p>
               </div>
               <div className={styles.signup_form_group}>
                 <label htmlFor="lastName">Last Name:</label>
                 <input
-                  {...register('lastName')}
+                  {...register('lastName', { required: '* fill the field' })}
                   type="text"
                   placeholder="Your Last Name"
                 />
+                <p className={styles.signup_error}>
+                  {errors?.lastName?.message}
+                </p>
               </div>
               <div className={styles.signup_form_group}>
                 <label htmlFor="email">Email address:</label>
                 <input
-                  {...register('email')}
+                  {...register('email', { required: '* fill the field' })}
                   type="email"
                   placeholder="Your email address"
                 />
+                <p className={styles.signup_error}>{errors?.email?.message}</p>
               </div>
               <div className={styles.signup_form_group}>
                 <label htmlFor="country">Your country:</label>
                 <input
-                  {...register('country')}
+                  {...register('country', { required: '* fill the field' })}
                   type="text"
                   placeholder="Your country"
                 />
+                <p className={styles.signup_error}>
+                  {errors?.country?.message}
+                </p>
               </div>
               <Controller
                 name="citizenUS"
@@ -153,7 +163,6 @@ export const SignUp = () => {
                   width={140}
                   height={53}
                   type={'submit'}
-                  disabled={!isValid}
                   variant={'inverted'}
                 >
                   Next
@@ -174,12 +183,17 @@ export const SignUp = () => {
               className={styles.signup_form_step_two}
               onSubmit={handleSubmit(onSubmit)}
             >
-              <label htmlFor="password">Enter password:</label>
-              <input
-                {...register('password')}
-                type="password"
-                placeholder="Password from the letter"
-              />
+              <div className={styles.signup_form_group}>
+                <label htmlFor="password">Enter password:</label>
+                <input
+                  {...register('password', { required: '* fill the field' })}
+                  type="password"
+                  placeholder="Password from the letter"
+                />
+                <p className={styles.signup_error}>
+                  {errors?.password?.message}
+                </p>
+              </div>
               <div className={styles.signup_form_btns}>
                 <CustomButton
                   width={140}
