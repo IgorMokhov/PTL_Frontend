@@ -15,7 +15,11 @@ export interface IFormInput {
 export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
   const [login, { isSuccess, data }] = useLoginMutation();
 
   const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
@@ -34,15 +38,21 @@ export const Login = () => {
         <LoginHeader />
 
         <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">
+            Email:
+            <p className={styles.login_error}>{errors?.email?.message}</p>
+          </label>
           <input
-            {...register('email')}
+            {...register('email', { required: '* fill the field' })}
             type="email"
             placeholder="Your email address"
           />
-          <label htmlFor="email">Password:</label>
+          <label htmlFor="email">
+            Password:
+            <p className={styles.login_error}>{errors?.password?.message}</p>
+          </label>
           <input
-            {...register('password')}
+            {...register('password', { required: '* fill the field' })}
             type="password"
             placeholder="Your password"
           />
