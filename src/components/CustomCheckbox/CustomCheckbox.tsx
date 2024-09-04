@@ -21,7 +21,7 @@ export const CustomCheckbox = ({
         id="custom-checkbox"
       />
       <label className={styles.checkbox_label} htmlFor="custom-checkbox">
-        {label}
+        {`${value ? '' : '*\u00A0'} ${label}`}
       </label>
     </div>
   );
