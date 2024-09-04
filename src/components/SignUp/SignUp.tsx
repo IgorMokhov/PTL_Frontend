@@ -1,41 +1,78 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLoginMutation, useSignupMutation } from '../../redux/userApi';
 import { LoginHeader } from '../LoginHeader/LoginHeader';
-import styles from './SignUp.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
 import { CustomButton } from '../CustomButton/CustomButton';
+import styles from './SignUp.module.scss';
 
-interface IFormInputStepOne {
+interface FormData {
   firstName: string;
   lastName: string;
   email: string;
   country: string;
   citizenUS: boolean;
-}
-
-interface IFormInputStepTwo {
   password: string;
 }
 
 export const SignUp = () => {
-  const { register, handleSubmit, getValues, control, formState } =
-    useForm<IFormInputStepOne>(); // for form in the step one
-  const { register: registerStepTwo, handleSubmit: handleSubmitStepTwo } =
-    useForm<IFormInputStepTwo>(); // for form in the step two
-  const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
-  const onSubmitStepOne: SubmitHandler<IFormInputStepOne> = (data) => {
-    console.log(data);
-    setStep(2);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = useForm<FormData>();
+
+  const [
+    signup,
+    { isSuccess: isSuccessSignUp, isError: isErrorSignUp, error: errorSignUp },
+  ] = useSignupMutation(); // for step one
+  const [
+    login,
+    { isSuccess: isSuccessLogin, isError: isErrorLogin, error: errorLogin },
+  ] = useLoginMutation(); // for step two
+
+  const onSubmit: SubmitHandler<FormData> = ({
+    firstName,
+    lastName,
+    email,
+    country,
+    citizenUS,
+    password,
+  }) => {
+    if (step === 1) {
+      signup({
+        email: email,
+        is_verified: citizenUS,
+        first_name: firstName,
+        last_name: lastName,
+        country: country,
+      });
+    }
+    if (step === 2) {
+      login({ email, password });
+    }
   };
 
-  const onSubmitStepTwo: SubmitHandler<IFormInputStepTwo> = (data) => {
-    console.log(data);
-    navigate('/');
-  };
+  useEffect(() => {
+    if (isSuccessSignUp) {
+      setStep(2);
+    } else if (isErrorSignUp) {
+      console.log(errorSignUp);
+    }
+  }, [isSuccessSignUp, isErrorSignUp, errorSignUp]);
+
+  useEffect(() => {
+    if (isSuccessLogin) {
+      navigate('/');
+    } else if (isErrorLogin) {
+      console.log(errorLogin);
+    }
+  }, [isSuccessLogin, isErrorLogin, errorLogin]);
 
   return (
     <div className={styles.wrapper}>
@@ -57,7 +94,7 @@ export const SignUp = () => {
             </div>
             <form
               className={styles.signup_form}
-              onSubmit={handleSubmit(onSubmitStepOne)}
+              onSubmit={handleSubmit(onSubmit)}
             >
               <div className={styles.signup_form_group}>
                 <label htmlFor="firstName">First Name:</label>
@@ -116,7 +153,7 @@ export const SignUp = () => {
                   width={140}
                   height={53}
                   type={'submit'}
-                  disabled={!formState.isValid}
+                  disabled={!isValid}
                   variant={'inverted'}
                 >
                   Next
@@ -135,11 +172,11 @@ export const SignUp = () => {
             </p>
             <form
               className={styles.signup_form_step_two}
-              onSubmit={handleSubmitStepTwo(onSubmitStepTwo)}
+              onSubmit={handleSubmit(onSubmit)}
             >
               <label htmlFor="password">Enter password:</label>
               <input
-                {...registerStepTwo('password')}
+                {...register('password')}
                 type="password"
                 placeholder="Password from the letter"
               />
