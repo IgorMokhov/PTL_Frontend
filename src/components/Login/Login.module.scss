@@ -12,6 +12,7 @@
 
   &_form {
     & label {
+      position: relative;
       display: block;
       font-weight: 400;
       font-size: 18px;
@@ -58,7 +59,6 @@
     align-items: center;
     justify-content: center;
     margin-top: 60px;
-
   }
 
   &_footer_text {
@@ -70,5 +70,13 @@
   &_footer_link {
     color: white;
     margin-left: 5px;
+  }
+
+  &_error {
+    position: absolute;
+    top: 46px;
+    right: 13px;
+    color: var(--error-color);
+    font-size: 16px;
   }
 }
