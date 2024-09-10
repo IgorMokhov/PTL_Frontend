@@ -22,8 +22,8 @@ export const Login = () => {
   } = useForm<IFormInput>();
   const [login, { isSuccess, data }] = useLoginMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
-    login({ email, password });
+  const onSubmit: SubmitHandler<IFormInput> = async ({ email, password }) => {
+    await login({ email, password }).unwrap();
   };
 
   if (isSuccess && data) {

@@ -32,11 +32,11 @@ export const ForgotPassword = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = ({ email, password }) => {
+  const onSubmit: SubmitHandler<IFormInput> = async ({ email, password }) => {
     if (step === 1) {
-      resetPassword({ email });
+      await resetPassword({ email }).unwrap();
     } else if (step === 2) {
-      login({ email, password });
+      await login({ email, password }).unwrap();
     }
   };
 

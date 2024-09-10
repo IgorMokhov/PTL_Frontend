@@ -13,16 +13,16 @@ export const EditUserPassword = () => {
   const { register, handleSubmit, reset } = useForm<IFormInput>();
   const [updatePassword] = useUpdatePasswordMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = ({
+  const onSubmit: SubmitHandler<IFormInput> = async ({
     newPass,
     newPassConfirm,
     currentPass,
   }) => {
-    updatePassword({
+    await updatePassword({
       new_password: newPass,
       confirm_password: newPassConfirm,
       old_password: currentPass,
-    });
+    }).unwrap();
     reset();
   };
 

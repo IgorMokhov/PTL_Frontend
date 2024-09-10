@@ -21,18 +21,18 @@ export const EditUserProfile = () => {
   });
   const [updateUser] = useUpdateUserMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = ({
+  const onSubmit: SubmitHandler<IFormInput> = async ({
     firstName,
     lastName,
     email,
     country,
   }) => {
-    updateUser({
+    await updateUser({
       first_name: firstName,
       last_name: lastName,
       email,
       country,
-    });
+    }).unwrap();
     reset();
   };
 
