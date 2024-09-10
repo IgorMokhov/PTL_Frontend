@@ -24,6 +24,7 @@ export const SignUp = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -36,7 +37,7 @@ export const SignUp = () => {
     { isSuccess: isSuccessLogin, isError: isErrorLogin, error: errorLogin },
   ] = useLoginMutation(); // for step two
 
-  const onSubmit: SubmitHandler<FormData> = ({
+  const onSubmit: SubmitHandler<FormData> = async ({
     firstName,
     lastName,
     email,
@@ -45,16 +46,16 @@ export const SignUp = () => {
     password,
   }) => {
     if (step === 1) {
-      signup({
+      await signup({
         email: email,
         is_verified: citizenUS,
         first_name: firstName,
         last_name: lastName,
         country: country,
-      });
+      }).unwrap();
     }
     if (step === 2) {
-      login({ email, password });
+      await login({ email, password }).unwrap();
     }
   };
 
@@ -62,6 +63,7 @@ export const SignUp = () => {
     if (isSuccessSignUp) {
       setStep(2);
     } else if (isErrorSignUp) {
+      reset();
       console.log(errorSignUp);
     }
   }, [isSuccessSignUp, isErrorSignUp, errorSignUp]);
@@ -125,7 +127,13 @@ export const SignUp = () => {
                   type="email"
                   placeholder="Your email address"
                 />
-                <p className={styles.signup_error}>{errors?.email?.message}</p>
+                <p className={styles.signup_error}>
+                  {errors?.email?.message ||
+                    (errorSignUp &&
+                      'status' in errorSignUp &&
+                      errorSignUp?.status === 400 &&
+                      'REGISTER USER ALREADY EXISTS')}
+                </p>
               </div>
               <div className={styles.signup_form_group}>
                 <label htmlFor="country">Your country:</label>
