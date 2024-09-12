@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
 import { CustomButton } from '../CustomButton/CustomButton';
+import { useAppDispatch } from '../../redux/hooks';
+import { setToken } from '../../redux/slices/auth/authSlice';
+import { useAuth } from '../../redux/customHooks/useAuth';
 import styles from './SignUp.module.scss';
 
 interface FormData {
@@ -18,7 +21,9 @@ interface FormData {
 
 export const SignUp = () => {
   const [step, setStep] = useState(1);
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -30,11 +35,22 @@ export const SignUp = () => {
 
   const [
     signup,
-    { isSuccess: isSuccessSignUp, isError: isErrorSignUp, error: errorSignUp },
+    {
+      isSuccess: isSuccessSignUp,
+      isError: isErrorSignUp,
+      error: errorSignUp,
+      isLoading: isLoadingSignUp,
+    },
   ] = useSignupMutation(); // for step one
   const [
     login,
-    { isSuccess: isSuccessLogin, isError: isErrorLogin, error: errorLogin },
+    {
+      isSuccess: isSuccessLogin,
+      isError: isErrorLogin,
+      error: errorLogin,
+      data: dataLogin,
+      isLoading: isLoadingLogin,
+    },
   ] = useLoginMutation(); // for step two
 
   const onSubmit: SubmitHandler<FormData> = async ({
@@ -42,15 +58,13 @@ export const SignUp = () => {
     lastName,
     email,
     country,
-    citizenUS,
     password,
   }) => {
     if (step === 1) {
       await signup({
         email: email,
-        is_verified: citizenUS,
-        first_name: firstName,
-        last_name: lastName,
+        name: firstName,
+        lastname: lastName,
         country: country,
       }).unwrap();
     }
@@ -69,12 +83,17 @@ export const SignUp = () => {
   }, [isSuccessSignUp, isErrorSignUp, errorSignUp]);
 
   useEffect(() => {
-    if (isSuccessLogin) {
+    if (isSuccessLogin && dataLogin) {
+      dispatch(setToken(dataLogin.token));
       navigate('/');
     } else if (isErrorLogin) {
       console.log(errorLogin);
     }
   }, [isSuccessLogin, isErrorLogin, errorLogin]);
+
+  useEffect(() => {
+    if (isAuth) navigate('/');
+  }, [isAuth]);
 
   return (
     <div className={styles.wrapper}>
@@ -172,6 +191,7 @@ export const SignUp = () => {
                   height={53}
                   type={'submit'}
                   variant={'inverted'}
+                  disabled={isLoadingSignUp}
                 >
                   Next
                 </CustomButton>
@@ -208,13 +228,14 @@ export const SignUp = () => {
                   height={53}
                   onClick={() => setStep(1)}
                 >
-                  Sign In
+                  Back
                 </CustomButton>
                 <CustomButton
                   width={140}
                   height={53}
                   type={'submit'}
                   variant={'inverted'}
+                  disabled={isLoadingLogin}
                 >
                   Sign Up
                 </CustomButton>
