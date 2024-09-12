@@ -7,6 +7,9 @@ import {
   useLoginMutation,
   useResetPasswordMutation,
 } from '../../redux/userApi';
+import { useAuth } from '../../redux/customHooks/useAuth';
+import { useAppDispatch } from '../../redux/hooks';
+import { setToken } from '../../redux/slices/auth/authSlice';
 import styles from './ForgotPassword.module.scss';
 
 interface IFormInput {
@@ -17,13 +20,27 @@ interface IFormInput {
 export const ForgotPassword = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+  const { isAuth } = useAuth();
+  const dispatch = useAppDispatch();
+
   const [
     resetPassword,
-    { isSuccess: isSuccessReset, isError: isErrorReset, error: errorReset },
+    {
+      isSuccess: isSuccessReset,
+      isError: isErrorReset,
+      error: errorReset,
+      isLoading: isLoadingReset,
+    },
   ] = useResetPasswordMutation();
   const [
     login,
-    { isSuccess: isSuccessLogin, isError: isErrorLogin, error: errorLogin },
+    {
+      isSuccess: isSuccessLogin,
+      isError: isErrorLogin,
+      error: errorLogin,
+      isLoading: isLoadingLogin,
+      data: dataLogin,
+    },
   ] = useLoginMutation();
 
   const {
@@ -49,12 +66,17 @@ export const ForgotPassword = () => {
   }, [isSuccessReset, isErrorReset, errorReset]);
 
   useEffect(() => {
-    if (isSuccessLogin) {
+    if (isSuccessLogin && dataLogin) {
+      dispatch(setToken(dataLogin.token));
       navigate('/');
     } else if (isErrorLogin) {
       console.log(errorLogin);
     }
   }, [isSuccessLogin, isErrorLogin, errorLogin]);
+
+  useEffect(() => {
+    if (isAuth) navigate('/');
+  }, [isAuth]);
 
   return (
     <div className={styles.wrapper}>
@@ -99,6 +121,7 @@ export const ForgotPassword = () => {
                   height={53}
                   variant={'inverted'}
                   type={'submit'}
+                  disabled={isLoadingReset}
                 >
                   Send password
                 </CustomButton>
@@ -146,6 +169,7 @@ export const ForgotPassword = () => {
                   height={53}
                   variant={'inverted'}
                   type={'submit'}
+                  disabled={isLoadingLogin}
                 >
                   Change password
                 </CustomButton>
