@@ -5,6 +5,8 @@ import { CustomButton } from '../CustomButton/CustomButton';
 import { useLoginMutation } from '../../redux/userApi';
 import { useAppDispatch } from '../../redux/hooks';
 import { setToken } from '../../redux/slices/auth/authSlice';
+import { useEffect } from 'react';
+import { useAuth } from '../../redux/customHooks/useAuth';
 import styles from './Login.module.scss';
 
 export interface IFormInput {
@@ -15,22 +17,30 @@ export interface IFormInput {
 export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isAuth } = useAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const [login, { isSuccess, data }] = useLoginMutation();
+  const [login, { isSuccess, data, isLoading }] = useLoginMutation();
 
   const onSubmit: SubmitHandler<IFormInput> = async ({ email, password }) => {
     await login({ email, password }).unwrap();
   };
 
-  if (isSuccess && data) {
-    const token = data.access_token;
-    dispatch(setToken(token));
-    navigate('/');
-  }
+  useEffect(() => {
+    if (isSuccess && data) {
+      const token = data.token;
+      dispatch(setToken(token));
+      navigate('/');
+    }
+  }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (isAuth) navigate('/');
+  }, [isAuth]);
 
   return (
     <div className={styles.wrapper}>
@@ -64,6 +74,7 @@ export const Login = () => {
             width={140}
             height={53}
             variant={'inverted'}
+            disabled={isLoading}
             type={'submit'}
           >
             Sign In
