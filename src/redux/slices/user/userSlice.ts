@@ -19,10 +19,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.country = action.payload;
-      state.email = action.payload;
-      state.lastname = action.payload;
-      state.name = action.payload;
+      state.country = action.payload.country;
+      state.email = action.payload.email;
+      state.lastname = action.payload.lastname;
+      state.name = action.payload.name;
     },
     removeUser: () => initialState,
   },
