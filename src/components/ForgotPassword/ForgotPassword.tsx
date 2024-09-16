@@ -10,12 +10,11 @@ import {
 import { useAuth } from '../../redux/customHooks/useAuth';
 import { useAppDispatch } from '../../redux/hooks';
 import { setToken } from '../../redux/slices/auth/authSlice';
+import { Login } from '../../types/user';
+import { ErrorResponse } from '../../types/errors';
 import styles from './ForgotPassword.module.scss';
 
-interface IFormInput {
-  email: string;
-  password: string;
-}
+interface IFormInput extends Login {}
 
 export const ForgotPassword = () => {
   const [step, setStep] = useState(1);
@@ -46,14 +45,17 @@ export const ForgotPassword = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async ({ email, password }) => {
     if (step === 1) {
       await resetPassword({ email }).unwrap();
+      reset({ email: '' });
     } else if (step === 2) {
       await login({ email, password }).unwrap();
+      reset({ password: '' });
     }
   };
 
@@ -98,7 +100,8 @@ export const ForgotPassword = () => {
               <label htmlFor="email">
                 Email:
                 <p className={styles.forgot_pass_error}>
-                  {errors?.email?.message}
+                  {errors?.email?.message ||
+                    (errorReset && (errorReset as ErrorResponse).data.message)}
                 </p>
               </label>
               <input
@@ -146,7 +149,8 @@ export const ForgotPassword = () => {
               <label htmlFor="password">
                 Enter password:
                 <p className={styles.forgot_pass_error}>
-                  {errors?.password?.message}
+                  {errors?.password?.message ||
+                    (errorLogin && (errorLogin as ErrorResponse).data.message)}
                 </p>
               </label>
               <input
