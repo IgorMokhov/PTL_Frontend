@@ -2,19 +2,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import styles from './EditUserProfile.module.scss';
 import { useUpdateUserMutation } from '../../redux/userApi';
+import { User } from '../../types/user';
 
-interface IFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
-}
+interface IFormInput extends User {}
 
 export const EditUserProfile = () => {
   const { register, handleSubmit, reset } = useForm<IFormInput>({
     defaultValues: {
-      firstName: 'Nick',
-      lastName: 'Stone',
+      name: 'Nick',
+      lastname: 'Stone',
       email: 'nickolas.stone@gmail.com',
       country: 'Russian Federation',
     },
@@ -22,14 +18,14 @@ export const EditUserProfile = () => {
   const [updateUser] = useUpdateUserMutation();
 
   const onSubmit: SubmitHandler<IFormInput> = async ({
-    firstName,
-    lastName,
+    name,
+    lastname,
     email,
     country,
   }) => {
     await updateUser({
-      first_name: firstName,
-      last_name: lastName,
+      name,
+      lastname,
       email,
       country,
     }).unwrap();
@@ -43,12 +39,12 @@ export const EditUserProfile = () => {
 
       <form className={styles.user_form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.user_form_group}>
-          <label htmlFor="firstName">First Name:</label>
-          <input {...register('firstName')} type="text" />
+          <label htmlFor="name">First Name:</label>
+          <input {...register('name')} type="text" />
         </div>
         <div className={styles.user_form_group}>
-          <label htmlFor="lastName">Last Name:</label>
-          <input {...register('lastName')} type="text" />
+          <label htmlFor="lastname">Last Name:</label>
+          <input {...register('lastname')} type="text" />
         </div>
         <div className={styles.user_form_group}>
           <label htmlFor="email">Email address:</label>
