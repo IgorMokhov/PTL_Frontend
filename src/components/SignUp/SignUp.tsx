@@ -8,13 +8,11 @@ import { CustomButton } from '../CustomButton/CustomButton';
 import { useAppDispatch } from '../../redux/hooks';
 import { setToken } from '../../redux/slices/auth/authSlice';
 import { useAuth } from '../../redux/customHooks/useAuth';
+import { User } from '../../types/user';
+import { ErrorResponse } from '../../types/errors';
 import styles from './SignUp.module.scss';
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
+interface FormData extends User {
   citizenUS: boolean;
   password: string;
 }
@@ -30,8 +28,12 @@ export const SignUp = () => {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FormData>();
+
+  const emailValue = watch('email');
+  const passwordValue = watch('password');
 
   const [
     signup,
@@ -54,18 +56,18 @@ export const SignUp = () => {
   ] = useLoginMutation(); // for step two
 
   const onSubmit: SubmitHandler<FormData> = async ({
-    firstName,
-    lastName,
+    name,
+    lastname,
     email,
     country,
     password,
   }) => {
     if (step === 1) {
       await signup({
-        email: email,
-        name: firstName,
-        lastname: lastName,
-        country: country,
+        email,
+        name,
+        lastname,
+        country,
       }).unwrap();
     }
     if (step === 2) {
@@ -118,25 +120,23 @@ export const SignUp = () => {
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className={styles.signup_form_group}>
-                <label htmlFor="firstName">First Name:</label>
+                <label htmlFor="name">First Name:</label>
                 <input
-                  {...register('firstName', { required: '* fill the field' })}
+                  {...register('name', { required: '* fill the field' })}
                   type="text"
                   placeholder="Your First Name"
                 />
-                <p className={styles.signup_error}>
-                  {errors?.firstName?.message}
-                </p>
+                <p className={styles.signup_error}>{errors?.name?.message}</p>
               </div>
               <div className={styles.signup_form_group}>
-                <label htmlFor="lastName">Last Name:</label>
+                <label htmlFor="lastname">Last Name:</label>
                 <input
-                  {...register('lastName', { required: '* fill the field' })}
+                  {...register('lastname', { required: '* fill the field' })}
                   type="text"
                   placeholder="Your Last Name"
                 />
                 <p className={styles.signup_error}>
-                  {errors?.lastName?.message}
+                  {errors?.lastname?.message}
                 </p>
               </div>
               <div className={styles.signup_form_group}>
@@ -148,10 +148,9 @@ export const SignUp = () => {
                 />
                 <p className={styles.signup_error}>
                   {errors?.email?.message ||
-                    (errorSignUp &&
-                      'status' in errorSignUp &&
-                      errorSignUp?.status === 400 &&
-                      'REGISTER USER ALREADY EXISTS')}
+                    (!emailValue &&
+                      errorSignUp &&
+                      (errorSignUp as ErrorResponse).data.message)}
                 </p>
               </div>
               <div className={styles.signup_form_group}>
@@ -219,7 +218,10 @@ export const SignUp = () => {
                   placeholder="Password from the letter"
                 />
                 <p className={styles.signup_error}>
-                  {errors?.password?.message}
+                  {errors?.password?.message ||
+                    (!passwordValue &&
+                      errorLogin &&
+                      (errorLogin as ErrorResponse).data.message)}
                 </p>
               </div>
               <div className={styles.signup_form_btns}>
