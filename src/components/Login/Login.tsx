@@ -7,9 +7,10 @@ import { useAppDispatch } from '../../redux/hooks';
 import { setToken } from '../../redux/slices/auth/authSlice';
 import { useEffect } from 'react';
 import { useAuth } from '../../redux/customHooks/useAuth';
+import { ErrorResponse } from '../../types/errors';
 import styles from './Login.module.scss';
 
-export interface IFormInput {
+interface IFormInput {
   email: string;
   password: string;
 }
@@ -22,11 +23,14 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>();
-  const [login, { isSuccess, data, isLoading }] = useLoginMutation();
+  const [login, { isSuccess, data, isLoading, error: errorLogin }] =
+    useLoginMutation();
 
   const onSubmit: SubmitHandler<IFormInput> = async ({ email, password }) => {
+    reset();
     await login({ email, password }).unwrap();
   };
 
@@ -59,7 +63,10 @@ export const Login = () => {
           />
           <label htmlFor="email">
             Password:
-            <p className={styles.login_error}>{errors?.password?.message}</p>
+            <p className={styles.login_error}>
+              {errors?.password?.message ||
+                (errorLogin && (errorLogin as ErrorResponse).data.message)}
+            </p>
           </label>
           <input
             {...register('password', { required: '* fill the field' })}
