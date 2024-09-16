@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { useUpdatePasswordMutation } from '../../redux/userApi';
+import { ErrorResponse } from '../../types/errors';
 import styles from './EditUserPassword.module.scss';
 
 interface IFormInput {
@@ -10,8 +11,17 @@ interface IFormInput {
 }
 
 export const EditUserPassword = () => {
-  const { register, handleSubmit, reset } = useForm<IFormInput>();
-  const [updatePassword] = useUpdatePasswordMutation();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
+  const [updatePassword, { error: errorUpdate }] = useUpdatePasswordMutation();
+
+  const newPassValue = watch('newPass');
 
   const onSubmit: SubmitHandler<IFormInput> = async ({
     newPass,
@@ -34,15 +44,36 @@ export const EditUserPassword = () => {
       <form className={styles.password_form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.password_form_group}>
           <label htmlFor="newPass">New password:</label>
-          <input {...register('newPass')} type="password" />
+          <input
+            {...register('newPass', { required: '* fill the field' })}
+            type="password"
+          />
+          <p className={styles.password_error}>{errors?.newPass?.message}</p>
         </div>
         <div className={styles.password_form_group}>
           <label htmlFor="newPassConfirm">New password confirmation:</label>
-          <input {...register('newPassConfirm')} type="password" />
+          <input
+            {...register('newPassConfirm', {
+              required: '* fill the field',
+              validate: (value) =>
+                value === newPassValue || '* passwords do not match',
+            })}
+            type="password"
+          />
+          <p className={styles.password_error}>
+            {errors?.newPassConfirm?.message}
+          </p>
         </div>
         <div className={styles.password_form_group}>
           <label htmlFor="currentPass">Current password:</label>
-          <input {...register('currentPass')} type="password" />
+          <input
+            {...register('currentPass', { required: '* fill the field' })}
+            type="password"
+          />
+          <p className={styles.password_error}>
+            {errors?.currentPass?.message ||
+              (errorUpdate && (errorUpdate as ErrorResponse).data.message)}
+          </p>
         </div>
         <CustomButton type={'submit'} width={162} height={53}>
           Update
