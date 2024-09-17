@@ -1,4 +1,4 @@
-import { Verification } from '../../components/Verification/Verification';
+import { Verification } from '../components/Verification/Verification';
 
 export const VerificationPage = () => {
   return (

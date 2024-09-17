@@ -1,4 +1,4 @@
-import { TokenLaunches } from '../../components/TokenLaunches/TokenLaunches';
+import { TokenLaunches } from '../components/TokenLaunches/TokenLaunches';
 
 export const TokenLaunchesPage = () => {
   return (
