@@ -12,6 +12,7 @@ import { VerificationPage } from './pages/VerificationPage';
 import { LoginPage } from './pages/LoginPage';
 import { SignUpPage } from './pages/SignupPage';
 import { ForgotPassPage } from './pages/ForgotPassPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { useGetUserQuery } from './redux/userApi';
 import { setUser } from './redux/slices/user/userSlice';
@@ -46,6 +47,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="forgot-password" element={<ForgotPassPage />} />
+        <Route path="*" element={<NotFoundPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Layout />}>
