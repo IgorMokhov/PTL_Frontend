@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Login, LoginResponse, User } from '../types/user';
 import { RootState } from './store';
 
-interface UpdatedPassword {
+export interface UpdatedPassword {
   confirm_password: string;
   new_password: string;
   old_password: string;
