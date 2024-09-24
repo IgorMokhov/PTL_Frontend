@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { setToken } from './redux/slices/auth/authSlice';
-import { Layout } from './components/Layout/Layout';
+import { MainLayout } from './layouts/MainLayout/MainLayout';
 import { HomePage } from './pages/HomePage';
 import { AccountPage } from './pages/AccountPage';
 import { TokenLaunchesPage } from './pages/TokenLaunchesPage';
@@ -50,7 +50,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="account" element={<AccountPage />} />
             <Route path="token-launches" element={<TokenLaunchesPage />} />
