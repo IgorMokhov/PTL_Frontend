@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Login, LoginResponse, User } from '../types/user';
+import { BaseResponse, Login, LoginResponse, User } from '../types/user';
 import { RootState } from './store';
 
 export interface UpdatedPassword {
@@ -9,6 +9,8 @@ export interface UpdatedPassword {
 }
 
 type Email = Omit<Login, 'password'>;
+
+type PasswordResponse = BaseResponse | string;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -25,7 +27,7 @@ export const userApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    signup: builder.mutation<{}, User>({
+    signup: builder.mutation<BaseResponse, User>({
       query: (signupData) => ({
         url: '/auth/register',
         method: 'POST',
@@ -41,7 +43,7 @@ export const userApi = createApi({
       }),
     }),
 
-    resetPassword: builder.mutation<string, Email>({
+    resetPassword: builder.mutation<PasswordResponse, Email>({
       query: (email) => ({
         url: '/password/reset',
         method: 'POST',
@@ -49,7 +51,7 @@ export const userApi = createApi({
       }),
     }),
 
-    updateUser: builder.mutation<{}, User>({
+    updateUser: builder.mutation<BaseResponse, User>({
       query: (newData) => ({
         url: '/user',
         method: 'PUT',
@@ -57,7 +59,7 @@ export const userApi = createApi({
       }),
     }),
 
-    updatePassword: builder.mutation<string, UpdatedPassword>({
+    updatePassword: builder.mutation<PasswordResponse, UpdatedPassword>({
       query: (newPassword) => ({
         url: '/password/change',
         method: 'PATCH',
