@@ -13,3 +13,7 @@ export interface Login {
 export interface LoginResponse {
   token: string;
 }
+
+export interface BaseResponse {
+  [key: string]: string | {};
+}
