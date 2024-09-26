@@ -1,8 +1,13 @@
 import { useLocation } from 'react-router-dom';
+import { useLogout } from '../../redux/customHooks/useLogout';
+import { useAppSelector } from '../../redux/hooks';
 import styles from './Header.module.scss';
 
 export const Header = () => {
   const { pathname } = useLocation();
+  const name = useAppSelector((state) => state.user.name);
+  const lastname = useAppSelector((state) => state.user.lastname);
+  const logout = useLogout();
 
   const getTitle = (pathname: string): string => {
     switch (pathname) {
@@ -25,7 +30,6 @@ export const Header = () => {
         break;
     }
   };
-
   const title = getTitle(pathname);
 
   return (
@@ -44,7 +48,8 @@ export const Header = () => {
             fill="white"
           />
         </svg>
-        <span>Nick Stone</span>
+
+        {name && <span onClick={() => logout()}>{`${name} ${lastname}`}</span>}
       </div>
     </header>
   );
