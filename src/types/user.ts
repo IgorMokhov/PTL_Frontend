@@ -3,6 +3,7 @@ export interface User {
   name: string;
   lastname: string;
   country: string;
+  isVerified?: boolean;
 }
 
 export interface Login {
