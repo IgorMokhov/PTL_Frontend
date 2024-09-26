@@ -5,6 +5,7 @@ export interface UserState {
   email: string | null;
   lastname: string | null;
   name: string | null;
+  isVerified: boolean;
 }
 
 const initialState: UserState = {
@@ -12,6 +13,7 @@ const initialState: UserState = {
   email: null,
   lastname: null,
   name: null,
+  isVerified: false,
 };
 
 const userSlice = createSlice({
@@ -23,6 +25,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.lastname = action.payload.lastname;
       state.name = action.payload.name;
+      state.isVerified = action.payload.isverified;
     },
     removeUser: () => initialState,
   },
