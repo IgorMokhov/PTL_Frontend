@@ -13,7 +13,12 @@ export const EditUserProfile = () => {
   const email = useAppSelector((state) => state.user.email);
   const country = useAppSelector((state) => state.user.country);
 
-  const { register, handleSubmit, reset } = useForm<FormInput>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>({
     defaultValues: {
       name: name ?? '',
       lastname: lastname ?? '',
@@ -21,6 +26,7 @@ export const EditUserProfile = () => {
       country: country ?? '',
     },
   });
+
   const [updateUser] = useUpdateUserMutation();
 
   const onSubmit: SubmitHandler<FormInput> = async ({
@@ -35,7 +41,6 @@ export const EditUserProfile = () => {
       email,
       country,
     }).unwrap();
-    reset();
   };
 
   return (
@@ -46,20 +51,37 @@ export const EditUserProfile = () => {
       <form className={styles.user_form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.user_form_group}>
           <label htmlFor="name">First Name:</label>
-          <input {...register('name')} type="text" />
+          <input
+            {...register('name', { required: '* fill the field' })}
+            type="text"
+          />
+          <p className={styles.user_error}>{errors?.name?.message}</p>
         </div>
         <div className={styles.user_form_group}>
           <label htmlFor="lastname">Last Name:</label>
-          <input {...register('lastname')} type="text" />
+          <input
+            {...register('lastname', { required: '* fill the field' })}
+            type="text"
+          />
+          <p className={styles.user_error}>{errors?.lastname?.message}</p>
         </div>
         <div className={styles.user_form_group}>
           <label htmlFor="email">Email address:</label>
-          <input {...register('email')} type="email" />
+          <input
+            {...register('email', { required: '* fill the field' })}
+            type="email"
+          />
+          <p className={styles.user_error}>{errors?.email?.message}</p>
         </div>
         <div className={styles.user_form_group}>
           <label htmlFor="country">Your country:</label>
-          <input {...register('country')} type="text" />
+          <input
+            {...register('country', { required: '* fill the field' })}
+            type="text"
+          />
+          <p className={styles.user_error}>{errors?.country?.message}</p>
         </div>
+
         <CustomButton type={'submit'} width={162} height={53}>
           Update
         </CustomButton>
