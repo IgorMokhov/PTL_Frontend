@@ -1,23 +1,29 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
-import styles from './EditUserProfile.module.scss';
 import { useUpdateUserMutation } from '../../redux/userApi';
+import { useAppSelector } from '../../redux/hooks';
 import { User } from '../../types/user';
+import styles from './EditUserProfile.module.scss';
 
-interface IFormInput extends User {}
+interface FormInput extends User {}
 
 export const EditUserProfile = () => {
-  const { register, handleSubmit, reset } = useForm<IFormInput>({
+  const name = useAppSelector((state) => state.user.name);
+  const lastname = useAppSelector((state) => state.user.lastname);
+  const email = useAppSelector((state) => state.user.email);
+  const country = useAppSelector((state) => state.user.country);
+
+  const { register, handleSubmit, reset } = useForm<FormInput>({
     defaultValues: {
-      name: 'Nick',
-      lastname: 'Stone',
-      email: 'nickolas.stone@gmail.com',
-      country: 'Russian Federation',
+      name: name ?? '',
+      lastname: lastname ?? '',
+      email: email ?? '',
+      country: country ?? '',
     },
   });
   const [updateUser] = useUpdateUserMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = async ({
+  const onSubmit: SubmitHandler<FormInput> = async ({
     name,
     lastname,
     email,
