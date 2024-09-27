@@ -73,6 +73,13 @@ export const userApi = createApi({
         method: 'GET',
       }),
     }),
+
+    verification: builder.mutation<BaseResponse, void>({
+      query: () => ({
+        url: '/user/verification',
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -83,4 +90,5 @@ export const {
   useUpdateUserMutation,
   useUpdatePasswordMutation,
   useGetUserQuery,
+  useVerificationMutation,
 } = userApi;
