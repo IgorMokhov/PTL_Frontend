@@ -1,8 +1,8 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
-import styles from './Verification.module.scss';
 import { useAppSelector } from '../../redux/hooks';
+import styles from './Verification.module.scss';
 
 interface FormInput {
   email: string;
@@ -11,12 +11,13 @@ interface FormInput {
 
 export const Verification = () => {
   const email = useAppSelector((state) => state.user.email);
+  const isVerified = useAppSelector((state) => state.user.isVerified);
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm<FormInput>({
     defaultValues: { email: email ?? '', citizenUS: true },
   });
@@ -37,7 +38,13 @@ export const Verification = () => {
       >
         <label>
           Email address:
-          <p className={styles.verification_error}>{errors.email?.message}</p>
+          {errors.email ? (
+            <p className={styles.verification_error}>{errors.email?.message}</p>
+          ) : (
+            isVerified && (
+              <p className={styles.verification_verified}>confirmed</p>
+            )
+          )}
         </label>
         <input
           {...register('email', { required: '* fill the field' })}
@@ -56,7 +63,7 @@ export const Verification = () => {
             />
           )}
         />
-        <CustomButton width={325} height={53} type="submit" disabled={!isValid}>
+        <CustomButton width={325} height={53} type="submit">
           Send a message to confirm
         </CustomButton>
       </form>
