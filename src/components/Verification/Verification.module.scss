@@ -46,11 +46,19 @@
     max-width: 475px;
   }
 
-  &_error {
+  &_error,
+  &_verified {
     position: absolute;
     top: 46px;
     right: 13px;
-    color: var(--error-color);
     font-size: 16px;
+  }
+
+  &_error {
+    color: var(--error-color);
+  }
+
+  &_verified {
+    color: #fff829;
   }
 }
