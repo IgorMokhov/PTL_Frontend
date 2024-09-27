@@ -2,6 +2,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
 import styles from './Verification.module.scss';
+import { useAppSelector } from '../../redux/hooks';
 
 interface FormInput {
   email: string;
@@ -9,12 +10,16 @@ interface FormInput {
 }
 
 export const Verification = () => {
+  const email = useAppSelector((state) => state.user.email);
+
   const {
     register,
     handleSubmit,
     control,
-    formState: { isValid },
-  } = useForm<FormInput>();
+    formState: { isValid, errors },
+  } = useForm<FormInput>({
+    defaultValues: { email: email ?? '', citizenUS: true },
+  });
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
@@ -30,11 +35,13 @@ export const Verification = () => {
         className={styles.verification_form}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <label>Email address:</label>
+        <label>
+          Email address:
+          <p className={styles.verification_error}>{errors.email?.message}</p>
+        </label>
         <input
-          {...register('email')}
+          {...register('email', { required: '* fill the field' })}
           type="email"
-          placeholder="nickolas.stone@gmail.com"
         />
         <Controller
           name="citizenUS"
