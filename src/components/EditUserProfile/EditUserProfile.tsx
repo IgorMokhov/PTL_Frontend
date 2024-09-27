@@ -3,6 +3,7 @@ import { CustomButton } from '../CustomButton/CustomButton';
 import { useUpdateUserMutation } from '../../redux/userApi';
 import { useAppSelector } from '../../redux/hooks';
 import { User } from '../../types/user';
+import { ErrorResponse } from '../../types/errors';
 import styles from './EditUserProfile.module.scss';
 
 interface FormInput extends User {}
@@ -16,7 +17,6 @@ export const EditUserProfile = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
@@ -27,7 +27,8 @@ export const EditUserProfile = () => {
     },
   });
 
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser, { isLoading, error: errorUpdate }] =
+    useUpdateUserMutation();
 
   const onSubmit: SubmitHandler<FormInput> = async ({
     name,
@@ -71,7 +72,10 @@ export const EditUserProfile = () => {
             {...register('email', { required: '* fill the field' })}
             type="email"
           />
-          <p className={styles.user_error}>{errors?.email?.message}</p>
+          <p className={styles.user_error}>
+            {errors?.email?.message ||
+              (errorUpdate && (errorUpdate as ErrorResponse).data.message)}
+          </p>
         </div>
         <div className={styles.user_form_group}>
           <label htmlFor="country">Your country:</label>
@@ -82,7 +86,12 @@ export const EditUserProfile = () => {
           <p className={styles.user_error}>{errors?.country?.message}</p>
         </div>
 
-        <CustomButton type={'submit'} width={162} height={53}>
+        <CustomButton
+          type={'submit'}
+          width={162}
+          height={53}
+          disabled={isLoading}
+        >
           Update
         </CustomButton>
       </form>
