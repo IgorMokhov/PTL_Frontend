@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
 import { useAppSelector } from '../../redux/hooks';
+import { useVerificationMutation } from '../../redux/userApi';
+import { ErrorResponse } from '../../types/errors';
 import styles from './Verification.module.scss';
 
 interface FormInput {
@@ -13,6 +16,11 @@ export const Verification = () => {
   const email = useAppSelector((state) => state.user.email);
   const isVerified = useAppSelector((state) => state.user.isVerified);
 
+  const [
+    verification,
+    { isError: isErrorVerification, error: errorVerification },
+  ] = useVerificationMutation();
+
   const {
     register,
     handleSubmit,
@@ -22,9 +30,15 @@ export const Verification = () => {
     defaultValues: { email: email ?? '', citizenUS: true },
   });
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormInput> = async () => {
+    await verification().unwrap();
   };
+
+  useEffect(() => {
+    if (isErrorVerification) {
+      console.log(errorVerification);
+    }
+  }, [isErrorVerification, errorVerification]);
 
   return (
     <div className={styles.verification}>
@@ -39,7 +53,11 @@ export const Verification = () => {
         <label>
           Email address:
           {errors.email ? (
-            <p className={styles.verification_error}>{errors.email?.message}</p>
+            <p className={styles.verification_error}>
+              {errors.email?.message ||
+                (errorVerification &&
+                  (errorVerification as ErrorResponse).data.message)}
+            </p>
           ) : (
             isVerified && (
               <p className={styles.verification_verified}>confirmed</p>
@@ -47,7 +65,11 @@ export const Verification = () => {
           )}
         </label>
         <input
-          {...register('email', { required: '* fill the field' })}
+          {...register('email', {
+            required: '* fill the field',
+            validate: (emailValue) =>
+              email === emailValue || '* email do not match',
+          })}
           type="email"
         />
         <Controller
