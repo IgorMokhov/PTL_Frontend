@@ -16,11 +16,14 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { useGetUserQuery } from './redux/userApi';
 import { setUser } from './redux/slices/user/userSlice';
+import { ErrorResponse } from './types/errors';
+import { useLogout } from './redux/customHooks/useLogout';
 import './App.scss';
 
 function App() {
   const token = useAppSelector((state) => state.auth.token);
   const dispatch = useAppDispatch();
+  const logout = useLogout();
 
   const { isSuccess, data, isError, error } = useGetUserQuery(undefined, {
     skip: !token,
@@ -31,6 +34,9 @@ function App() {
       dispatch(setUser(data));
     } else if (isError) {
       console.log(error);
+      if ((error as ErrorResponse).status === 401) {
+        logout();
+      }
     }
   }, [data, isError, isSuccess, error, dispatch]);
 
