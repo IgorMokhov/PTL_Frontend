@@ -10,7 +10,8 @@
   font-family: 'Mukta', sans-serif;
 
   &:disabled {
-    opacity: 0.5;
+    color: #828282;
+    background-color: var(--background-btn);
   }
 
   img {
