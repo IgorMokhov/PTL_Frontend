@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { CustomCheckbox } from '../CustomCheckbox/CustomCheckbox';
@@ -15,6 +15,7 @@ interface FormInput {
 export const Verification = () => {
   const email = useAppSelector((state) => state.user.email);
   const isVerified = useAppSelector((state) => state.user.isVerified);
+  const [timer, setTimer] = useState(0);
 
   const [
     verification,
@@ -25,14 +26,31 @@ export const Verification = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormInput>({
     defaultValues: { email: email ?? '', citizenUS: true },
   });
 
   const onSubmit: SubmitHandler<FormInput> = async () => {
     await verification().unwrap();
+    setTimer(30);
   };
+
+  const isDisabledButton: boolean = timer > 0 || isVerified || !isValid;
+
+  useEffect(() => {
+    let interval: number;
+
+    if (timer) {
+      interval = setInterval(() => {
+        setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timer]);
 
   useEffect(() => {
     if (isErrorVerification) {
@@ -85,8 +103,17 @@ export const Verification = () => {
             />
           )}
         />
-        <CustomButton width={325} height={53} type="submit">
-          Send a message to confirm
+        <CustomButton
+          width={325}
+          height={53}
+          type="submit"
+          disabled={isDisabledButton}
+        >
+          {isVerified
+            ? 'Message sended'
+            : timer
+            ? `Message sended [00:${timer < 10 ? `0${timer}` : timer}]`
+            : 'Send a message to confirm'}
         </CustomButton>
       </form>
       <p className={styles.verification_descr}>
